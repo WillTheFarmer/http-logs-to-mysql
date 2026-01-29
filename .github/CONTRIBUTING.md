@@ -1,10 +1,10 @@
 Until Ground Hog Day I am full-time on Python Code cleanup and NGINX formats. 
 
-When starting project I thoroughly researched and tested all Apache log formats. I have not done any of that for NGINX other than read documentation. The repository data NGINX log files are from any NGINX server. 
+Thoroughly researched and tested all Apache log formats. I have not done that for NGINX yet. I read documentation and several online sources. 
 
-MySQL stored procedure code for NGINX are a stripped down copy of Apache code. 
+NGINX standard access and error format log files in `/data/nginx_combined/` and `/data/nginx_error/` are from a NGINX server.
 
-Only code for combined. I stripped out other formats. 
+MySQL stored procedure code for NGINX are stripped down copies of Apache twin. Contains only code required for `combined` format.
 
 `parse_acces_nginx.sql`, `import_access_nginx.sql`, `parse_error_nginx.sql`, `import_error_nginx.sql`
 
