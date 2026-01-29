@@ -22,7 +22,7 @@ Many `config.json` datasets are `data_file_loader.py` and `database_module.py` m
 
 3) All ***Process Modules*** have `process` method and ***ProcessProperties*** subclass `properties_process.py`. 
 
-4) `main:process_files` can be passed a `collection Filter` parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable. 
+4) `main:process_files` can be passed a `collection Filter` parameter. It can be a Process list (processID) to execute for any number of reasons. This makes the App more integrable and adaptable. If no parameter is passed `main:process_files` executes `config.json` Processes for status = 'Active'.
 
 5) All ***Observers*** watch using ***Observer datasets*** : `path`, `recursive`, `interval` for the arrival of new files in `path` values.
 
@@ -31,10 +31,6 @@ Each Observer dataset also has a `process_list` property. The `process_list` hol
 The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which overrides configured Process executions.
 
 Multiple folders and formats can be processed running different Observers with properties for different log formats and paths.
-
-`files_watch.py` executes `watchdog` which loads the Observers that call `main:process_files`.
-
-`files_import.py` executes `main:process_files` which runs the `config.json` Processes. If no parameter is passed status = 'Active' is default.
 
 The data-driven properties allows flexibility and expandability.
 
@@ -121,7 +117,7 @@ To minimize data exposure and breach risks create a database USER for Python mod
 
 Run `files_watch.py` then add file or files to a configured folder and `main:process_files` will process ONLY the added files. 
 
-Run `files_import.py` to ingest all unprocessed files in all configured folders.
+Run `files_import.py` to ingest all unprocessed files in all configured folders. `main:process_files` executes `config.json` Processes for status = 'Active'.
 
 Next time `files_import.py` is run only new files since last run will be processed. It knows what files have been imported.
 
