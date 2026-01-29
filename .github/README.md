@@ -2,7 +2,7 @@
 ![Entity Relationship Diagram](./images/import_load_summary.png)
 `main:process_files` Import Load Summary from ingesting log files included in repository.
 
-httpLogs2MySQL is a Python ***JSON data-driven*** App & MySQL schema to automate importing access & error files, normalizing log data into database and generating a well-documented data lineage audit trail 24/7.
+Python ***JSON data-driven*** App & MySQL schema to automate importing access & error files, normalizing log data into database and generating a well-documented data lineage audit trail 24/7.
 
 ## Application Collections and Factory Method
 
