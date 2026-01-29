@@ -74,8 +74,6 @@ Application requires two GeoLite databases - ***City*** & ***ASN***. GeoLite dat
 2) DB-IP Lite databases at [DB-IP](https://db-ip.com/db/lite.php) available under Creative Commons Attribution 4.0 International License.
 ### User-Agent data integration
 using [user-agents](https://pypi.org/project/user-agents/) provides browser, device and operating system information stored and normalized into 11 database schema tables.
-## Visual Interface App
-in my development queue [MySQL2ApacheECharts](https://github.com/willthefarmer/mysql-to-apache-echarts) is a ***visualization tool*** for the database schema. The Web interface consists of [Express](https://github.com/expressjs/express) web application frameworks with [W2UI](https://github.com/vitmalina/w2ui) drill-down data grids for Data Point Details 
 & [Apache ECharts](https://github.com/apache/echarts) frameworks for Data Visualization.
 ## MySQL database schema DDL and build scripts
 [mysql-schema-http-logs](https://github.com/willthefarmer/mysql-schema-http-logs) includes all ***database DDL and build scripts*** for the database schema used in this repository.
@@ -126,3 +124,5 @@ Run `files_import.py` to ingest all unprocessed files in all configured folders.
 Next time `files_import.py` is run only new files since last run will be processed. It knows what files have been imported.
 
 The GeoIP databases are not included in repository. Links to download GeoLite2 and Geo-IP databases are in Data Enrichments section. Both are easy to download and free.
+## Visual Interface App
+in my development queue [MySQL2ApacheECharts](https://github.com/willthefarmer/mysql-to-apache-echarts) is a ***visualization tool*** for the database schema. The Web interface consists of [Express](https://github.com/expressjs/express) web application frameworks with [W2UI](https://github.com/vitmalina/w2ui) drill-down data grids for Data Point Details.
