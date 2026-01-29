@@ -18,7 +18,7 @@ httpLogs2MySQL is a Python ***JSON data-driven*** App & MySQL schema to automate
 
 To process different log format files in different directories the `config.json` Process collection is populated with different combinations of ***Process Datasets***. 
 
-Many `config.json` datasets are different `attributes` property values `data_file_loader.py` and `database_module.py` module reuse.
+Many `config.json` datasets are `data_file_loader.py` and `database_module.py` module reuse with different `attributes` property values.
 
 3) All ***Process Modules*** have a `process` method and a `class ProcessProperties` properties. 
 
