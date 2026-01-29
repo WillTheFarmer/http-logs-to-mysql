@@ -12,11 +12,13 @@ httpLogs2MySQL is a Python ***JSON data-driven*** App & MySQL schema to automate
 
 2) All ***Process Datasets*** have an `attributes` property. The attributes property can have any number of properties the ***Process Module*** requires.
 
-The `data_file_loader.py` module has attribute properties for folder path and log format and load table values set in the `config.json`.
+`data_file_loader.py` module has attribute properties for `folder_path`and `log_format` and `load_table` values.
 
-The `database_module.py` module has attribute properties `procedure_name` and number of parameters `parm_1`.
+`database_module.py` module has attribute properties `procedure_name` and number of parameters `parm_1` values.
 
-To process different log format files in different directories the `config.json` Process collection is populated with different combinations of ***Process Datasets***. Many are different `attributes` property using `data_file_loader.py` and `database_module.py` modules.
+To process different log format files in different directories the `config.json` Process collection is populated with different combinations of ***Process Datasets***. 
+
+Many `config.json` datasets are different `attributes` property values using `data_file_loader.py` and `database_module.py` modules.
 
 3) All ***Process Modules*** have a `process` method and a `class ProcessProperties` properties. 
 
