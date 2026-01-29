@@ -8,7 +8,7 @@ httpLogs2MySQL is a Python ***JSON data-driven*** App & MySQL schema to automate
 
 `config.json` has ***Processes*** and ***Observers*** configured to share the seven (7) log format folders in repository `/data/` folder.
 
-1) Some ***Processes*** load files from folders `data_file_loader.py` for unprocessed files. Some processes execute MySQL stored procedures `database_module.py` and some processes perform Data Enhancements - `data_enrichment_geoip.py` and `data_enrichment_useragent.py`.
+1) Some ***Processes*** load files from folders `data_file_loader.py` into staging LOAD TABLES. Some processes execute MySQL stored procedures `database_module.py` and some processes perform Data Enhancements - `data_enrichment_geoip.py` and `data_enrichment_useragent.py`.
 
 2) All ***Process Datasets*** have an `attributes` property. The attributes property can have any number of properties the ***Process Module*** requires.
 
