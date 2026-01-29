@@ -38,7 +38,9 @@ The data-driven properties allows flexibility and expandability.
 
 The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
 
-Thoroughly researched and tested all Apache log formats. I read NGINX documentation and online sources. I have not done that for NGINX yet.
+Thoroughly researched and tested all Apache log formats. I have not done that for NGINX.
+
+I read NGINX documentation and online sources which suggests Apache format combined.  
 
 ***Repository NGINX log files are standard access and error formats from new NGINX server*** 
 
@@ -56,7 +58,6 @@ MySQL procedural files are copies of Apache code. Then stripped to code required
 
 Python naming convention fixes are done or close. `config.json` file structure changes are done.
 
-Until Ground Hog Day I am full-time on Python Code cleanup and NGINX formats.
 ### Process properties - Application Processes
 ![Process Properties](./images/process_properties.png)
 
