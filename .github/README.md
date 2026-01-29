@@ -12,7 +12,7 @@ httpLogs2MySQL is a Python ***JSON data-driven*** App & MySQL schema to automate
 
 2) All ***Process Datasets*** have an `attributes` property. The attributes property can have any number of properties the ***Process Module*** requires.
 
-`data_file_loader.py` module has attribute properties for `folder_path`and `log_format` and `load_table` values.
+`data_file_loader.py` module has attribute properties for `log_format`, `load_table`, `path`, `recursive`, `server`, `server_port` values.
 
 `database_module.py` module has attribute properties `module_name` and number of parameters `module_parm1` values.
 
@@ -26,7 +26,7 @@ Many `config.json` datasets are `data_file_loader.py` and `database_module.py` m
 
 5) All ***Observers*** watch for the arrival of new unprocessed files in a directory path.
 
-Each Observer has a `process_list` which is a processid subset from `config.json` Processes collection. This Process subset and `pathfile` are passed to `main:process_files` which overrides configured Process executions.
+Each Observer has a `process_list` property - `[processid]` subset of `id` property from `config.json` Processes collection. The `process_list` property and watchdog `event.src_path` property are passed to `main:process_files` which overrides configured Process executions.
 
 Multiple folders and formats can be processed running different Observers with properties for different log formats and paths.
 
