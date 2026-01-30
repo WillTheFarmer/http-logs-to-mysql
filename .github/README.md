@@ -1,18 +1,18 @@
-## Python handles File Processing & Database handles Data Processing
+## Python handles File processing & Database handles Data processing
 ![Entity Relationship Diagram](./images/import_load_summary.png)
 `main:process_files` Import Load Summary from ingesting log files included in repository.
 
 ### Application runs on Windows, Linux & MacOS - Database runs on MySQL & MariaDB
 ***JSON data-driven*** App & MySQL schema to automate import of access & error files, normalize log data into database and generate a well-documented data lineage audit trail.
 
-## Two Collections and Factory Method
+## two Collections and Factory Method
 
 `config.json` has ***Processes*** and ***Observers*** configured to share the seven (7) log format folders in repository `/data/` folder.
 
-### Process properties - Application Processes
+### Process properties - application Processes
 ![Process Properties](./images/process_properties.png)
 
-### Observer properties - Application watchdog Observers
+### Observer properties - application watchdog Observers
 ![Observers Properties](./images/observer_properties.png)
 
 1) Some ***Processes*** load files from folders into staging LOAD TABLES `data_file_loader.py`, some execute MySQL stored procedures `database_module.py` and some processes perform Data Enhancements - `data_enrichment_geoip.py` and `data_enrichment_useragent.py`.
