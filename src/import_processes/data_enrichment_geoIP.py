@@ -141,7 +141,7 @@ def process(parms):
 
             except Exception as e:
                 mod.warning_count += 1
-                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
+                add_message( 9, {e}, {__name__}, {type(e).__name__},  e)
 
             try:
                 asnData = asnReader.asn(ipAddress)
@@ -160,7 +160,7 @@ def process(parms):
                 asnData = None
                 network = str(e.network)
                 mod.warning_count += 1
-                add_message( 0, {__name__},{type(e).__name__}, f"asnReader for IP : {ipAddress}", e)
+                add_message( 8, {__name__},{type(e).__name__}, f"asnReader for IP : {ipAddress}", e)
 
             updateSql = f"UPDATE log_client SET country_code='{country_code}', " \
                         f"country='{country}', " \
@@ -168,9 +168,14 @@ def process(parms):
                         f"city='{city}', " \
                         f"latitude={latitude}, " \
                         f"longitude={longitude}, " \
-                        f"organization='{organization}', " \
-                        f"network='{network}' " \
+                        f"organization='{organization}' " \
                         f" WHERE id= {recID};"
+
+                        # For tomorrow fix - network datatype error converting to string
+                        # f"organization='{organization}', " \
+                        # problem with network datatype I addressed before f-strings
+                        # f"network='{network}' " \ 
+
             try:
                 updateCursor.execute(updateSql)
 
