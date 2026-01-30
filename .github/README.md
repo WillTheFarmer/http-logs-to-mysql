@@ -66,6 +66,9 @@ Python naming convention fixes are done or close. `config.json` file structure c
 
 All processing stages (child processes) are encapsulated within one `main:process_files` (parent process) that captures process metrics, notifications and errors into database import tables.
 
+### Import Message Table - 2 Python records and 1 MySQL record
+![Message Table](./images/import_message_table.png)
+
 Every log data record is traceable back to the computer, path, file, load process, parse process and import process the data originates from.
 
 Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements. List of Observers Watching:

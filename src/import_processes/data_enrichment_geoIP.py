@@ -63,12 +63,12 @@ def process(parms):
     if not path.exists(geoip_city_file):
         geoip_city_file_exists = False
         mod.warning_count += 1
-        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
+        add_message( 6, f"GeoIP City database {geoip_city_file} not found", "Missing GeoIP")
 
     if not path.exists(geoip_asn_file):
         geoip_asn_file_exists = False
         mod.warning_count += 1
-        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
+        add_message( 7, f"GeoIP ASN database {geoip_city_file} not found", "Missing GeoIP")
 
     if geoip_city_file_exists and geoip_asn_file_exists:
 
@@ -80,21 +80,21 @@ def process(parms):
 
         except Exception as e:
             mod.warning_count += 1
-            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
+            add_message( 2, {e}, {__name__}, {type(e).__name__},  e)
 
         try:
             cityReader = geoip2.database.Reader(geoip_city_file)
 
         except Exception as e:
             mod.warning_count += 1
-            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
+            add_message( 3, {e}, {__name__}, {type(e).__name__},  e)
 
         try:
             asnReader = geoip2.database.Reader(geoip_asn_file)
 
         except Exception as e:
             mod.warning_count += 1
-            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
+            add_message( 4, {e}, {__name__}, {type(e).__name__},  e)
 
         for x in range(selectCursor.rowcount):
             mod.records_processed += 1

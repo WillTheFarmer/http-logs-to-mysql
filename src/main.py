@@ -100,10 +100,10 @@ if config:
     # Option 2 - pymysql_json.py uses config.json file for connection settings
     from src.database.pymysql_json import get_connection
 
-def update_importProcess(data):
+def update_import_process(data):
 
     # update import_process record ID = app.importProcessID
-    if data.get("ProcessErrors") == 0: 
+    if data.get("process_errors") == 0: 
        """ update import_process.completed = now() """
 
     #print(f"UPDATE import_process with {data} where id = {app.importProcessID}")
@@ -140,8 +140,9 @@ def execute_process(process):
                 app.executeSeconds = perf_counter() - app.executeStart
 
                 # print(data)
-        
-                update_importProcess(data)
+
+                # method to call TABLE UPDATE - 
+                #update_import_process(data)
 
                 # print(data)
                 # add import process information for summary report
@@ -166,7 +167,7 @@ def execute_process(process):
     except ValueError as e:
         add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
 def process_files(process_list=[]):
