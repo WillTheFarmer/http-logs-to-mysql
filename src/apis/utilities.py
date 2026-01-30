@@ -21,7 +21,7 @@ from os import remove
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 # Color Class used app-wide for Message Readability in console
 from apis.color_class import color
@@ -45,25 +45,25 @@ def copy_backup_file(log_path_file, log_days):
                 fileCopied = True
 
             except FileNotFoundError as e:
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
             except PermissionError as e:
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
             except shutil.SameFileError as e:
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
             except OSError as e:
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         except FileExistsError as e:
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         except PermissionError as e: 
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         except Exception as e:
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     if app.backup_days == -1 or fileCopied:
         try:
@@ -71,7 +71,7 @@ def copy_backup_file(log_path_file, log_days):
             print(f"{color.bg.CYAN}{color.style.BRIGHT}Deleted file : {log_path_file}{color.END}")
 
         except Exception as e:
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
               
 def update_value(current_value):
     # Do some operations

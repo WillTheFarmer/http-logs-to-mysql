@@ -19,7 +19,7 @@
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 # process-level properties and references shared across process app functions (def) 
 from apis.properties_process import DatabaseModule as mod
@@ -50,8 +50,8 @@ def process(parms):
                             str(app.importProcessID)])
 
     except pymysql.Error as e:
-        mod.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        mod.error_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         error_code = e.args[0]
         error_message = e.args[1]
@@ -77,8 +77,8 @@ def process(parms):
              return True #continue # Skip the current file and move to the next iteration
 
     except Exception as e:
-        errorCount += 1
-        add_error({__name__},{type(e).__name__}, f"Stored Procedure : {module_name} with Parms : {module_parm1} failed", e)
+        error_count += 1
+        add_message( 0, {__name__},{type(e).__name__}, f"Stored Procedure : {module_name} with Parms : {module_parm1} failed", e)
 
     app.dbConnection.commit()
 

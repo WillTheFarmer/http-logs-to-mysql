@@ -21,7 +21,7 @@
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 # process-level properties and references shared across process app functions (def) 
 from apis.properties_process import DataFileLoader as mod
@@ -80,8 +80,8 @@ def process_file(rawFile):
         days_since_imported = days_since_importedTuple[0][0]
 
     except Exception as e:
-        mod.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        mod.error_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     if days_since_imported is None:
 
@@ -89,7 +89,7 @@ def process_file(rawFile):
             #print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_server_port} loadFile : {loadFile}")
             print(f"load_table : {mod.load_table} log_format : {mod.log_format} server_name : {mod.log_server} server_port : {mod.log_server_port} days_since_imported : {days_since_imported}")
 
-        mod.filesProcessed += 1
+        mod.files_processed += 1
 
         if mod.display_log >= 2:
             print(f"Loading file | {rawFile}")
@@ -105,8 +105,8 @@ def process_file(rawFile):
             fileInsertFileID = fileInsertTupleID[0][0]
 
         except Exception as e:
-            mod.errorCount += 1
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            mod.error_count += 1
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         # LOAD DATA SQL String
         fileLoadSQL = ""
@@ -131,8 +131,8 @@ def process_file(rawFile):
             fileLoadSQL_format = " FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\r'"
 
         else:
-            mod.errorCount += 1
-            add_error({__name__},{type(e).__name__}, f"Process Log Format={mod.log_format} not found")
+            mod.error_count += 1
+            add_message( 0, {__name__},{type(e).__name__}, f"Process Log Format={mod.log_format} not found")
 
         if fileLoadSQL_format:
             # format is excepted - based on other app settings (config.json) figure out if server info components required for LOAD DATA string build
@@ -159,11 +159,11 @@ def process_file(rawFile):
                 mod.cursor.execute( "SELECT ROW_COUNT()" )
                 fileRecordsLoadedTuple = mod.cursor.fetchall()
                 fileRecordsLoaded = fileRecordsLoadedTuple[0][0]
-                mod.recordsProcessed = mod.recordsProcessed + fileRecordsLoaded
+                mod.records_processed = mod.records_processed + fileRecordsLoaded
 
             except pymysql.Error as e:
-                mod.errorCount += 1
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                mod.error_count += 1
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     elif mod.backup_days != 0:
         copy_backup_file(rawFile, days_since_imported)
@@ -194,7 +194,7 @@ def process(parms):
         print(f"File passed : {log_file}")
 
     if log_file:
-        mod.filesFound += 1
+        mod.files_found += 1
         process_file(log_file)
     else:        
         for rawFile in glob(mod.log_path, recursive=mod.log_recursive):
@@ -204,7 +204,7 @@ def process(parms):
             if app.error_details:
                 print(f"Processing file: {filename}")
 
-            mod.filesFound += 1
+            mod.files_found += 1
 
             try:
               fileStatus = process_file(rawFile)
@@ -215,8 +215,8 @@ def process(parms):
                       print(f"No record found for {filename}")
 
             except pymysql.Error as e:
-                add_error({__name__},{type(e).__name__}, {e})
-                mod.errorCount += 1
+                add_message( 0, {__name__},{type(e).__name__}, {e})
+                mod.error_count += 1
 
         # Commit changes if the loop completes without a breaking error
         else:

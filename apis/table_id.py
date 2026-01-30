@@ -14,7 +14,7 @@
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 import pymysql
 
@@ -61,12 +61,12 @@ def get_table_id(table):
         # print(f"SQL for '{table}': {sql_string}")
 
     except pymysql.Error as e:
-        app.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        app.error_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     except Exception as e:
-        app.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        app.error_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
         
     #print(f"table {table} id = {table_id}")
 

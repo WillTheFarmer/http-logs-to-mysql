@@ -1,15 +1,16 @@
 # version 4.0.1 - 01/24/2026 - Proper Python code, NGINX format support and Python/SQL repository separation - see changelog
 class ProcessProperties:
     """ standard process properties required for all import_process modules """
-    # columns in import_process TABLE
-    filesFound = 0
-    filesProcessed = 0
-    recordsProcessed = 0
-    errorCount = 0
+    # process-level metrics - columns in import_process TABLE
+    files_found = 0
+    files_processed = 0
+    records_processed = 0
+    error_count = 0
+    warning_count = 0
     # passed from child process to Import Load (main:process_files) as print message - not required - display only 
     # set to process error message on failure. Import Load (main:process_files) continues to execute next child process.
-    # processStatus included in process_list[]. Displayed at end of main:process_files 
-    processStatus = None
+    # process_status included in process_list[]. Displayed at end of main:process_files 
+    process_status = None
     # backup attributes at both app-level & process-level property classes
     backup_days = 0
     backup_path = ""
@@ -17,22 +18,24 @@ class ProcessProperties:
     @classmethod
     def set_defaults(cls):
         """ properties shared by all import_processes - reset process variables at start of process() """
-        cls.filesFound = 0
-        cls.filesProcessed = 0
-        cls.recordsProcessed = 0
-        cls.errorCount = 0
-        cls.processSeconds = 0.000000
-        cls.processStatus = None
+        cls.files_found = 0
+        cls.files_processed = 0
+        cls.records_processed = 0
+        cls.error_count = 0
+        cls.warning_count = 0
+        cls.process_seconds = 0.000000
+        cls.process_status = None
 
     @classmethod
     def process_report(cls):
         process_data = {
-            "Files Found": cls.filesFound,
-            "Files Loaded": cls.filesProcessed,
-            "Records Loaded": cls.recordsProcessed,
-            "Process Errors":  cls.errorCount,
-            "Process Seconds":  cls.processSeconds,
-            "Status":  cls.processStatus
+            "Files Found": cls.files_found,
+            "Files Loaded": cls.files_processed,
+            "Records Loaded": cls.records_processed,
+            "Warnings":  cls.warning_count,
+            "Errors":  cls.error_count,
+            "Process Seconds":  cls.process_seconds,
+            "Status":  cls.process_status
           }
         return process_data
 

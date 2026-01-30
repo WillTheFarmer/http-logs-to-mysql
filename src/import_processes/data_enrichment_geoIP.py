@@ -19,7 +19,7 @@
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 # process-level properties and references shared across process app functions (def) 
 from apis.properties_process import DataEnrichmentGeoIP as mod
@@ -62,13 +62,13 @@ def process(parms):
 
     if not path.exists(geoip_city_file):
         geoip_city_file_exists = False
-        mod.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        mod.warning_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     if not path.exists(geoip_asn_file):
         geoip_asn_file_exists = False
-        mod.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        mod.warning_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     if geoip_city_file_exists and geoip_asn_file_exists:
 
@@ -79,25 +79,25 @@ def process(parms):
             selectCursor.execute("SELECT id, name FROM log_client WHERE country_code IS NULL")
 
         except Exception as e:
-            mod.errorCount += 1
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            mod.warning_count += 1
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         try:
             cityReader = geoip2.database.Reader(geoip_city_file)
 
         except Exception as e:
-            mod.errorCount += 1
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            mod.warning_count += 1
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         try:
             asnReader = geoip2.database.Reader(geoip_asn_file)
 
         except Exception as e:
-            mod.errorCount += 1
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            mod.warning_count += 1
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         for x in range(selectCursor.rowcount):
-            mod.recordsProcessed += 1
+            mod.records_processed += 1
             geoipRec = selectCursor.fetchone()
             recID = str(geoipRec[0])
             ipAddress = geoipRec[1]
@@ -140,8 +140,8 @@ def process(parms):
                     longitude = cityData.location.longitude
 
             except Exception as e:
-                mod.errorCount += 1
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                mod.warning_count += 1
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
             try:
                 asnData = asnReader.asn(ipAddress)
@@ -159,8 +159,8 @@ def process(parms):
             except Exception as e:
                 asnData = None
                 network = str(e.network)
-                mod.errorCount += 1
-                add_error({__name__},{type(e).__name__}, f"asnReader for IP : {ipAddress}", e)
+                mod.warning_count += 1
+                add_message( 0, {__name__},{type(e).__name__}, f"asnReader for IP : {ipAddress}", e)
 
             updateSql = f"UPDATE log_client SET country_code='{country_code}', " \
                         f"country='{country}', " \
@@ -175,8 +175,8 @@ def process(parms):
                 updateCursor.execute(updateSql)
 
             except Exception as e:
-                mod.errorCount += 1
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                mod.warning_count += 1
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
         app.dbConnection.commit()
         selectCursor.close()

@@ -11,7 +11,7 @@ GRANT EXECUTE ON PROCEDURE import_error_nginx TO `http_upload`@`localhost`;
 GRANT EXECUTE ON PROCEDURE normalize_useragent TO `http_upload`@`localhost`;
 GRANT EXECUTE ON PROCEDURE normalize_client TO `http_upload`@`localhost`;
 -- Python module CALLS Stored Procedures for error logging
-GRANT EXECUTE ON PROCEDURE errorLoad TO `http_upload`@`localhost`;
+GRANT EXECUTE ON PROCEDURE messageLoad TO `http_upload`@`localhost`;
 -- Python module SELECTS Stored Functions for log processing
 GRANT EXECUTE ON FUNCTION importDeviceID TO `http_upload`@`localhost`;
 GRANT EXECUTE ON FUNCTION importClientID TO `http_upload`@`localhost`;

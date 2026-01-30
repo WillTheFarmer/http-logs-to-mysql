@@ -45,7 +45,7 @@ from src.factories.import_processes import get_import_process
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 # Color Class used app-wide for Message Readability in console
 from apis.color_class import color
@@ -121,7 +121,7 @@ def execute_process(process):
     if processParms.get("print") >= 1:
         print(f"{color.fg.GREEN}{color.style.NORMAL}Start{color.END} | " \
               f"{process.get("name")} | {datetime.now():%Y-%m-%d %H:%M:%S} | " \
-              f"{color.fg.GREEN}{color.style.NORMAL}App execution: {app.executeStart - app.processStart:.4f} seconds.{color.END}")
+              f"{color.fg.GREEN}{color.style.NORMAL}App execution: {app.executeStart - app.process_start:.4f} seconds.{color.END}")
 
     try:
         # gererate new primary ID for import_process table
@@ -151,7 +151,7 @@ def execute_process(process):
                 print(f"There is a problem - data: {data}")
 
         except Exception as e:
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
             #print(f"Error processing {process.get("name")}: {e}")
             return None
 
@@ -164,19 +164,21 @@ def execute_process(process):
         return processInfo
 
     except ValueError as e:
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     except FileNotFoundError:
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
 def process_files(process_list=[]):
     # display console message log header
     print (f"{color.fg.YELLOW}{color.style.BRIGHT}ProcessLogs start: {datetime.now():%Y-%m-%d %H:%M:%S} | Host: {app.host_name} | Port: {app.host_port}{color.END}") 
 
     # reset application-level calcualtion properties
-    app.errorCount = 0
-    app.processStart = perf_counter()
-    app.processSeconds = 0 
+    app.message_count = 0
+    app.warning_count = 0
+    app.error_count = 0
+    app.process_start = perf_counter()
+    app.process_seconds = 0 
 
     # shared connection for all app modules
     app.dbConnection = get_connection()
@@ -188,7 +190,7 @@ def process_files(process_list=[]):
     app.importClientID = get_table_id("client")
     app.importLoadID = get_table_id("load")
 
-    if app.errorCount > 0:
+    if app.error_count > 0:
         print("Error: Database Function Permissions. Check messages in import_error TABLE")
         sys.exit(1) # Exit with error code 1
 
@@ -230,19 +232,19 @@ def process_files(process_list=[]):
                 log_processes.append(processInfo)
     
         except Exception as e:
-            add_error({__name__},{type(e).__name__}, {e}, e)
+            add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
             # print(f"Error processing {processInfo}: {e}")
             # break  # Exit the loop entirely on error
             continue  # Or skip this process and move to next
 
-    loadUpdateSQL = f"UPDATE import_load SET errorCount={app.errorCount}, completed=now(), processSeconds={app.processSeconds} WHERE id={app.importLoadID}"
+    loadUpdateSQL = f"UPDATE import_load SET error_count={app.error_count}, completed=now(), process_seconds={app.process_seconds} WHERE id={app.importLoadID}"
 
     try:
         app.cursor.execute(loadUpdateSQL)
 
     except Exception as e:
-        app.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        app.error_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     # commit and close 
     app.dbConnection.commit()
@@ -253,32 +255,52 @@ def process_files(process_list=[]):
     app.dbConnection = None
  
     # Calculate the elapsed time
-    app.processSeconds = perf_counter() - app.processStart            
+    app.process_seconds = perf_counter() - app.process_start            
 
     # Summary Report - import load process list display
     # List of all processes that executed with totals. 
     # import_load & import_load_process tables have parent and child data records.
+
+    # Print row
+    print(" ")
+
     # Print report header
-    print(f"{color.fg.GREEN}{color.style.NORMAL}Import Load Summary | Log File & Record Counts and Process Metrics | " \
+    print(f"{color.fg.GREEN}{color.style.NORMAL}Import Load Summary{color.END} | " \
           f"ImportLoadID: {app.importLoadID} | " \
           f"ClientID: {app.importClientID} | " \
-          f"DeviceID:{app.importDeviceID} | " \
-          f"Errors Found:{app.errorCount} | " \
-          f"Host: {app.host_name} | Port: {app.host_port}{color.END}")
+          f"DeviceID: {app.importDeviceID} | " \
+          f"Warnings: {app.warning_count} | " \
+          f"Errors: {app.error_count} | " \
+          f"Host: {app.host_name} | Port: {app.host_port}{color.END} | " \
+          f"{color.fg.YELLOW}{color.style.BRIGHT}Process Metrics data points list{color.END} | " \
+          f"{color.fg.GREEN}{color.style.NORMAL}MySQL messages added {app.message_count}{color.END}")
+
+    # Print row
+    print(" ")
 
     # The 'keys' header option automatically uses dictionary keys as column headers
     print(tabulate(log_processes, headers='keys', tablefmt='github'))
 
+    # Print row
+    print(" ")
+
     # Print summary bottom
-    print(f"{color.fg.GREEN}{color.style.NORMAL}" \
+    print(f"{color.fg.GREEN}{color.style.NORMAL}Import Load Summary{color.END} | " \
           f"ImportLoadID: {app.importLoadID} | " \
-          f"{app.errorCount} Errors Found | Import Load Summary Values added to import_load TABLE{color.END}")
-   
-    # Print report footer
-    print(f"{color.fg.YELLOW}{color.style.BRIGHT}ProcessLogs complete: {datetime.now():%Y-%m-%d %H:%M:%S} | " \
-          f"Execution time: {app.processSeconds:.4f} seconds{color.END}")
+          f"ClientID: {app.importClientID} | " \
+          f"DeviceID: {app.importDeviceID} | " \
+          f"Warnings: {app.warning_count} | " \
+          f"Errors: {app.error_count} | " \
+          f"Host: {app.host_name} | " \
+          f"Port: {app.host_port}{color.END} | " \
+          f"{color.fg.YELLOW}{color.style.BRIGHT}Completed: {datetime.now():%Y-%m-%d %H:%M:%S} | " \
+          f"Execution time: {app.process_seconds:.4f} seconds{color.END}")
+    
     # Print application footer
     print(f"{color.fg.GREEN}{color.style.NORMAL}httpLogs2MySQL application{color.END} | " \
           f"Import all Files in Folders: {color.fg.GREEN}{color.style.NORMAL}files_import.py{color.END} | " \
           f"Watch for new Files in Folders: {color.fg.GREEN}{color.style.NORMAL}files_watch.py{color.END} | " \
           f"Process & Observer Property Lists: {color.fg.GREEN}{color.style.NORMAL}config_lists.py{color.END}")
+
+    # Print row
+    print(" ")

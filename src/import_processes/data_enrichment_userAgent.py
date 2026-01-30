@@ -19,7 +19,7 @@
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 # process-level properties and references shared across process app functions (def) 
 from apis.properties_process import DataEnrichmentUserAgent as mod
@@ -44,12 +44,12 @@ def process(parms):
         selectCursor.execute("SELECT id, name FROM access_log_useragent WHERE ua_browser IS NULL")
 
     except Exception as e:
-        mod.errorCount += 1
-        add_error({__name__},{type(e).__name__}, {e}, e)
+        mod.error_count += 1
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     for x in range(selectCursor.rowcount):
 
-        mod.recordsProcessed += 1
+        mod.records_processed += 1
 
         userAgent = selectCursor.fetchone()
 
@@ -109,8 +109,8 @@ def process(parms):
                 updateCursor.execute(updateSql)
 
             except Exception as e:
-                mod.errorCount += 1
-                add_error({__name__},{type(e).__name__}, {e}, e)
+                mod.error_count += 1
+                add_message( 0, {e}, {__name__}, {type(e).__name__},  e)
 
     app.dbConnection.commit()
 

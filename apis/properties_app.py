@@ -32,13 +32,15 @@ class app:
   mysql = None
   
   # used in main:process_files and main:update_importProcess for print messages and UPDATE import_process
-  processStart = 0
-  processSeconds = 0.0000  
+  process_start = 0
+  process_seconds = 0.0000  
 
-  # app-level error handler
+  # app-level metrics
   error = None
-  errorCount = 0
+  error_count = 0
   error_details = False
+  warning_count = 0
+  message_count = 0
 
   # used in main:execute_process - process becomes importProcess (import_process TABLE) before execution and updated afer execution.
   executeStart = 0

@@ -8,14 +8,19 @@ from apis.color_class import color
 # used EXIT if missing required IDs : app.importDeviceID, app.importClientID and app.importLoadID    
 import sys
 
-def add_error(module_name: str, exceptionType: str, message: str, data=None):
+def add_message(message_code: int, message: str, module_name="", exceptionType="", data=None):
 
-    app.errorCount += 1
+    # All messages handled by exceptions pass 0. message_code > 0 represent process warnings or other information to log 
+    app.message_count += 1
 
-    errorMessage = f"message - {message}"
+    # Just Error handling 
+    if message_code == 0:
+        app.error_count += 1
 
+    processMessage = f"message - {message}"
+    
     if exceptionType:
-        errorMessage = f"Error exceptionType : {exceptionType} - {errorMessage}"
+        processMessage = f"Error exceptionType : {exceptionType} - {processMessage}"
         
     #if data:
     #    print(f"Exception details: {data=}, {type(data)=}")        
@@ -33,12 +38,12 @@ def add_error(module_name: str, exceptionType: str, message: str, data=None):
         showWarningsLen = len(showWarnings)
 
         if showWarningsLen == 0:
-            print(f"errorMessage : {errorMessage}")
+            print(f"processMessage : {processMessage}")
         else:
           print(f"Length: {color.bg.YELLOW}{showWarningsLen}{color.END} showWarnings : {color.bg.YELLOW}{showWarnings}{color.END}")
 
     try:
-         app.cursor.callproc("errorLoad", [module_name, errorMessage, str(app.importLoadID), str(app.importProcessID)])
+         app.cursor.callproc("messageLoad", [ processMessage, module_name, str(message_code), str(app.importLoadID), str(app.importProcessID)])
         
     except Exception as e:
         print(f"Database permissions problem : {e}")

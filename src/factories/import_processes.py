@@ -15,6 +15,9 @@
 # synopsis: handles off the proper process to import load execution for httpLogs2MySQL application.
 # author: Will Raymond <farmfreshsoftware@gmail.com>
 
+# application-level error handle
+from apis.message_app import add_message
+
 from src.import_processes.data_file_loader import process as data_file_loader_process
 from src.import_processes.database_module import process as database_module_process
 from src.import_processes.data_enrichment_geoIP import process as data_enrichment_geoIP_process
@@ -32,5 +35,6 @@ def get_import_process(import_server_process):
 # Factory method to retrieve the correct data loader based on process type name.
     loader = LOADER_REGISTRY.get(import_server_process)
     if not loader:
-        raise ValueError(f"Unknown Import Process: {import_server_process}")
+        add_message( 0, f"Unknown Import Process: {import_server_process}", {__name__})
+
     return loader

@@ -4,7 +4,7 @@
 from apis.properties_app import app
 
 # application-level error handle
-from apis.error_app import add_error
+from apis.message_app import add_message
 
 import pymysql
 import sys
@@ -31,14 +31,14 @@ def get_connection(parms=app.mysql):
 
     except pymysql.err.OperationalError as e:
         # DB something not found
-        add_error({__name__},{type(e).__name__}, {e}, e )
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e )
 
     except pymysql.err.MySQLError as e:
         # Catch specific PyMySQL errors during connection attempt
-        add_error({__name__},{type(e).__name__}, {e}, e )
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e )
         sys.exit(1) # Exit the script upon connection failure
 
     except Exception as e:
         # Catch any other potential exceptions
-        add_error({__name__},{type(e).__name__}, {e}, e )
+        add_message( 0, {e}, {__name__}, {type(e).__name__},  e )
         sys.exit(1)
