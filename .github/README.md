@@ -165,7 +165,7 @@ Run `files_import.py` and `main:process_files` executes `config.json` Processes 
 
 Next time `files_import.py` is run only new files since last run will be processed. It knows what files have been imported.
 
-If issues occur check MySQL schema `import_error` TABLE. All messages INSERT unless Database Function Permissions problem.
+If issues occur check MySQL schema `import_message` TABLE. All messages INSERT unless Database Function Permissions problem.
 
 The GeoIP databases are not included in repository. Links to download GeoLite2 and Geo-IP databases are in Data Enrichments section. Both are easy to download and free.
 ## Visual Interface App
