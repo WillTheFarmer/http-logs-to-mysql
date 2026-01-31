@@ -56,13 +56,6 @@ Multiple access and error logs and formats can be loaded, parsed and imported al
 
 ### Python handles polling of log file folders and executing database LOAD DATA, Procedures, Functions and SQL Statements.
 
-## Database designed for HTTP log data analysis
-![Entity Relationship Diagram](./images/entity_relationship_diagram.png)
-
-Application determines what files have been processed using `import_file` TABLE. 
-Each imported file has record with name, path, size, created, modified attributes inserted during `main:process_files`.
-
-Application runs with no need for user interaction. File deletion is not required by application if files desired for later reference.
 ## Data Enrichments
 ### IP Geolocation data integration
 using [MaxMind GeoIP2](https://pypi.org/project/geoip2/) Python API provides IP country, subdivision, city, system organization, 
@@ -74,9 +67,7 @@ Application requires two GeoLite databases - ***City*** & ***ASN***. GeoLite dat
 2) DB-IP Lite databases at [DB-IP](https://db-ip.com/db/lite.php) available under Creative Commons Attribution 4.0 International License.
 ### User-Agent data integration
 using [user-agents](https://pypi.org/project/user-agents/) provides browser, device and operating system information stored and normalized into 11 database schema tables.
-& [Apache ECharts](https://github.com/apache/echarts) frameworks for Data Visualization.
-## MySQL database schema DDL and build scripts
-[mysql-schema-http-logs](https://github.com/willthefarmer/mysql-schema-http-logs) includes all ***database DDL and build scripts*** for the database schema used in this repository.
+
 ## Required Python Packages
 Single quotes around 'PyMySQL[rsa]' package required on macOS.
 |Python Package|Installation Command|GitHub Repository|
@@ -87,6 +78,17 @@ Single quotes around 'PyMySQL[rsa]' package required on macOS.
 |[python-dotenv](https://pypi.org/project/python-dotenv/)|python -m pip install python-dotenv|[theskumar/python-dotenv](https://github.com/theskumar/python-dotenv)|
 |[geoip2](https://pypi.org/project/geoip2/)|python -m pip install geoip2|[maxmind/GeoIP2-python](https://github.com/maxmind/GeoIP2-python)|
 |[tabulate](https://pypi.org/project/tabulate/)|python -m pip install tabulate|[astanin/python-tabulate](https://github.com/astanin/python-tabulate)|
+
+## Database designed for HTTP log data analysis
+![Entity Relationship Diagram](./images/entity_relationship_diagram.png)
+
+## MySQL database schema DDL and build scripts
+[mysql-schema-http-logs](https://github.com/willthefarmer/mysql-schema-http-logs) includes all ***database DDL and build scripts*** for the database schema used in this repository.
+
+Application determines what files have been processed using `import_file` TABLE. 
+Each imported file has record with name, path, size, created, modified attributes inserted during `main:process_files`.
+
+Application runs with no need for user interaction. File deletion is not required by application if files desired for later reference.
 
 ## NGINX log formats and data - not tested yet
 
