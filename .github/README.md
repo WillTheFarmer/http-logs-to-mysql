@@ -90,11 +90,9 @@ Each imported file has record with name, path, size, created, modified attribute
 
 Application runs with no need for user interaction. File deletion is not required by application if files desired for later reference.
 
-## NGINX log formats and data - not tested yet
+## new NGINX log formats and data - not tested yet
 
 From documentation read NGINX standard access logformat is same as Apache combined. I have not verified yet.
-
-NGINX data analysis is happening this weekend and done for Ground Hound Day release.
 
 ### Repository NGINX files are standard access and error formats from new NGINX server
 
@@ -102,17 +100,9 @@ NGINX log files in `/data/nginx_combined/` and `/data/nginx_error/` are from new
 
 Apache log formats have been thoroughly researched and tested. 
 
-### NGINX MySQL procedural code - not tested yet
+### new NGINX MySQL procedural code - not tested yet
 
-NGINX Stored Procedures are copies of Apache Stored Procedures and then stripped code down to process `combined` format only.
-
-`parse_access_nginx.sql` started as copy of `parse_access_apache.sql`
-
-`import_access_nginx.sql` started as copy of `import_access_apache.sql`
-
-`parse_error_nginx.sql` started as copy of `parse_error_apache.sql`
-
-`import_error_nginx.sql` started as copy of `import_error_apache.sql`
+Each log format has a Stored Procedure. More information will be added over new few days.
 
 The Apache and NGINX code demonstrates how to incorporate without code modification of current processes.
 
