@@ -23,7 +23,7 @@ GRANT EXECUTE ON FUNCTION importFileID TO `http_upload`@`localhost`;
 GRANT INSERT ON load_access_combined TO `http_upload`@`localhost`;
 GRANT INSERT ON load_access_csv TO `http_upload`@`localhost`;
 GRANT INSERT ON load_access_vhost TO `http_upload`@`localhost`;
-GRANT INSERT ON load_access_nginx TO `http_upload`@`localhost`;
+GRANT INSERT ON load_access_nginx_default TO `http_upload`@`localhost`;
 GRANT INSERT ON load_error_apache TO `http_upload`@`localhost`;
 GRANT INSERT ON load_error_nginx TO `http_upload`@`localhost`;
 -- Python module issues SELECT and UPDATE statements on TABLES due to converting parameters.

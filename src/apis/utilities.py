@@ -1,4 +1,4 @@
-# version 4.0.1 - 01/24/2026 - Proper Python code, NGINX format support and Python/SQL repository separation - see changelog
+# version 4.0.2 - 02/13/2026 - INT to BIGINT, PyMSQL to MySQLdb, mysql procedures for each server & format - see changelog
 #
 # function: copy_backup_file
 # synopsis: if file already been imported but still found in a GLOB directory search repeatedly.

@@ -6,7 +6,7 @@
 #
 #     http://www.http.org/licenses/LICENSE-2.0
 #
-# version 4.0.1 - 01/24/2026 - Proper Python code, NGINX format support and Python/SQL repository separation - see changelog
+# version 4.0.2 - 02/13/2026 - INT to BIGINT, PyMSQL to MySQLdb, mysql procedures for each server & format - see changelog
 #
 # CHANGELOG.md in repository - https://github.com/WillTheFarmer/http-logs-to-mysql
 #
@@ -96,7 +96,7 @@ if config:
     # Two options for shared database connection to help install issues
     # and separate connection data from JSON app process settings.  
     # Option 1 - pymysql_env.py uses .env file for connection settings 
-    #from src.database.pymysql_env import get_connection
+    # from src.database.pymysql_env import get_connection
     # Option 2 - pymysql_json.py uses config.json file for connection settings
     from src.database.pymysql_json import get_connection
 

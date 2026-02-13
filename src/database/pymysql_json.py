@@ -1,4 +1,4 @@
-# version 4.0.1 - 01/24/2026 - Proper Python code, NGINX format support and Python/SQL repository separation - see changelog
+# version 4.0.2 - 02/13/2026 - INT to BIGINT, PyMSQL to MySQLdb, mysql procedures for each server & format - see changelog
 
 # application-level properties and references shared across app modules (files) 
 from apis.properties_app import app
@@ -6,7 +6,9 @@ from apis.properties_app import app
 # application-level error handle
 from apis.message_app import add_message
 
-import pymysql
+# import pymysql
+import MySQLdb
+
 import sys
 
 def get_connection(parms=app.mysql):
@@ -19,7 +21,7 @@ def get_connection(parms=app.mysql):
     mysql_schema = parms.get("schema")
     
     try:
-        conn = pymysql.connect(host=mysql_host,
+        conn = MySQLdb.connect(host=mysql_host,
                                port=mysql_port,
                                user=mysql_user,
                                password=mysql_password,
@@ -29,11 +31,11 @@ def get_connection(parms=app.mysql):
 
         return conn
 
-    except pymysql.err.OperationalError as e:
+    except MySQLdb.err.OperationalError as e:
         # DB something not found
         add_message( 0, e , __name__ , type(e).__name__ ,  e )
 
-    except pymysql.err.MySQLError as e:
+    except MySQLdb.err.MySQLError as e:
         # Catch specific PyMySQL errors during connection attempt
         add_message( 0, e , __name__ , type(e).__name__ ,  e )
         sys.exit(1) # Exit the script upon connection failure

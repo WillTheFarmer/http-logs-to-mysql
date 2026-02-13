@@ -1,4 +1,4 @@
-# version 4.0.1 - 01/24/2026 - Proper Python code, NGINX format support and Python/SQL repository separation - see changelog
+# version 4.0.2 - 02/13/2026 - INT to BIGINT, PyMSQL to MySQLdb, mysql procedures for each server & format - see changelog
 # function: app_config module for configuration file that runs application
 # synopsis: processes HTTP access and error logs into MySQL or MariaDB for httpLogs2MySQL application.
 # author: Will Raymond <farmfreshsoftware@gmail.com>

@@ -152,7 +152,7 @@
       "attributes": {
         "print": 2,
         "log_format": "nginx_default",
-        "load_table": "load_access_nginx",
+        "load_table": "load_access_nginx_default",
         "path": "/Users/farmf/Documents/apacheLogs/2025_nginx/**/*access*.*",
         "recursive": true,
         "server": "mydomain.com",
