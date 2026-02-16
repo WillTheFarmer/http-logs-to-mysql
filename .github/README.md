@@ -1,11 +1,11 @@
 ## Python handles File processing & Database handles Data processing
 
 ### Application runs on Windows, Linux & MacOS - Database runs on MySQL & MariaDB
-***JSON data-driven*** App & MySQL schema to automate import of files, build custom "file data ingestion methods" into database and generate a well-documented data lineage audit trail.
+***JSON data-driven*** App & growing number of MySQL schemas to automate import of files, build custom ***"file data ingestion methods"*** into database and generate a well-documented data lineage audit trail.
 
-Each ***file data ingestion method*** has separate repositor with database schema designed for files-to-MySQL.
+Each ***"file data ingestion method"*** has separate repositor with database schema designed for files-to-MySQL.
 
-### the current Apache and NGINX http log files is example of custom "file data ingestion method".
+### this Apache and NGINX http log files method is example of custom "file data ingestion method"
 
 ![Entity Relationship Diagram](./images/import_load_summary.png)
 `main:process_files` Import Load Summary from ingesting log files included in repository.
