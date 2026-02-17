@@ -11,7 +11,7 @@ Each ***"file data ingestion method"*** has separate repository with database sc
 
 [mysql-system-logs](https://github.com/willthefarmer/mysql-system-logs)
 
-[mysql-file-system](https://github.com/willthefarmer/mysql-system-files)
+[mysql-system-files](https://github.com/willthefarmer/mysql-system-files)
 
 ### current Apache and NGINX http log files method is example of a custom "file data ingestion method"
 
